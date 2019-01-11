@@ -1,0 +1,343 @@
+/* -------------------- */
+/* Newly added for demo */
+/* -------------------- */
+
+input[type=text] {
+  padding: 6px;
+  margin-top: 9px;
+  font-size: px;
+}
+
+.searchbar button {
+  padding: 6px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.searchbar button:hover {
+  background: #ccc;
+}
+
+a.thumb {
+    float: left;
+}
+
+.storyInfo {
+    float: left;
+    padding-left: 12px;
+}
+
+/*.storyCategory {
+    font-style: italic;
+}*/
+
+.mainNav {
+    min-height: 100vh; /* Make sidebar full height of screen so results are on same y-axis */
+}
+
+/* ---------------- */
+/* End demo content */
+/* ---------------- */
+
+.owl-carousel{
+	clear: both;
+	width: 900px;
+}
+
+.carousel_item{
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	width: auto;
+	text-align: center;
+	float: left;
+}
+
+.carousel_item img{
+	height: 135px;
+	width: auto;
+}
+
+.carousel_text{
+	white-space: wrap;
+	width: 100px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table.header{
+	background: #f1f1f1;
+	-webkit-border-top-left-radius: 20px;
+	-webkit-border-top-right-radius: 20px;
+	-moz-border-radius-topleft: 20px;
+	-moz-border-radius-topright: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-style: solid;
+	border-color: gray;
+}
+
+#bottom{
+	width: 100%;
+	background: #dddddd;
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-style: none;
+	border-color: gray;
+	-webkit-border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	-moz-border-radius-bottomright: 10px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+table.header td{
+	padding-left:.8%;
+	padding-right:.8%;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+table.header td:not(.selected) a:link{
+	color: #777777;
+}
+
+table.header td:not(.selected) a:visited{
+	color: #777777;
+}
+
+table.header td:not(.selected) a:hover{
+	color: #333333;
+}
+
+table.header td.selected{
+	color: #000000;
+}
+
+table.header td.selected a:hover{
+	color: #000000;
+}
+
+
+table.header img{
+	width:100%;
+	max-width: 100px;
+}
+
+p.source{
+	padding:5px;
+	margin-left:10%;
+	margin-right:10%;
+	width:80%;
+}
+
+@media (min-width: 767px) {
+	div.mobileNav{
+		display: none;
+	}
+}
+
+@media (max-width: 767px) {
+	div.mainNav{
+		display: none;
+	}
+	div#page_header{
+		display: none;
+	}
+}
+
+.mobileNav > a h3{
+	color: #ffffff;
+	padding: 5px;
+	border-collapse: collapse;
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom: 3px;
+	margin-top: 0;
+}
+
+.mobileNav p{
+	width:100%;
+	text-align:center;
+}
+
+.mobileNav > a h3.one{ background-color: #FF00FF; }
+.mobileNav > a h3.two{ background-color: #6699FF; }
+.mobileNav > a h3.three{ background-color: #00CC00; }
+.mobileNav > a h3.four{ background-color: #FF0066; }
+.mobileNav > a h3.five{ background-color: #660066; }
+
+.IE-warning{
+	width: 60%;
+	min-width: 580px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align:center;
+	border-style: solid;
+    border-color: #C13333;
+	background-color: #EAA5A5;
+	color: black;
+	padding: 5px;
+	margin-bottom:20px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.IE-warning img{
+	width: 50px;
+	padding: 10px;
+}
+
+.authorCard{
+	padding: 10px;
+	height: 135px;
+}
+
+.authorCard img{
+	padding-right: 5px;
+	float: left;
+	height: 100%;
+}
+
+.authorCard .authorInfo{
+	display:table-cell;
+    vertical-align:middle;
+	height: 135px;
+}
+
+.authorCard .authorName{
+	margin-top: 0px;
+}
+
+.authorCard .authorWork{
+	margin-bottom: 2px;
+	padding-left: 10px;
+}
+
+.letterPicker{
+	color:#000000
+}
+
+.letterPicker a:link{
+	color:#666666
+}
+
+.letterPicker a:visited{
+	color:#666666
+}
+
+.letterPicker a:hover{
+	color:#444444
+}
+
+.AuthorPage{
+
+}
+
+.AuthorPageImage{
+	float:left;
+	padding-right: 10px;
+}
+
+.AuthorPageName{
+	font-size: 300%;
+	line-height: 110%;
+	padding-top:10px;
+}
+
+.AuthorPageClassification{
+	font-size: 200%;
+	padding-top:-10px;
+	padding-bottom: 5px;
+}
+
+.AuthorPageClassification a:link{
+	color: #414141;
+}
+
+.AuthorPageClassification a:visited{
+	color: #414141;
+}
+
+.AuthorPageBio{
+
+}
+
+.AuthorPageCategory{
+
+}
+
+.AuthorPageCategoryTitle{
+	font-size: 200%;
+	padding-top: 15px;
+}
+
+.AuthorPageCategoryTitle a:link{
+	color: #414141;
+}
+
+.AuthorPageCategoryTitle a:visited{
+	color: #414141;
+}
+
+.AuthorPageWork{
+	font-size: 125%;
+	margin-bottom: 4px;
+}
+
+.AuthorPageWork a:link{
+	color: #313131;
+}
+
+.AuthorPageWork a:hover{
+	color: #000055;
+}
+
+.lightLink a:link{
+	color: #313131;
+}
+
+.lightLink a:visited{
+	color: #414141;
+}
+
+.lightLink a:hover{
+	color: #002266;
+}
+
+#viewer-left{
+    padding-right: 20px;
+}
+
+.viewer-right{
+    padding-right: 10px;
+}
+
+.workText{
+    text-indent: 30px;
+    font-size: 120%;
+    line-height: 130%;
+}
+
+.searchWork a:link{
+    color: #303030;
+}
+
+.searchTitle a:link{
+    color: #303030;
+}
+
+.writtentext{
+    width: 80%;
+    height: 300px;
+    overflow: scroll;
+}
