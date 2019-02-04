@@ -10,7 +10,7 @@ HOW TO SET UP A TEST SERVER (on windows)
 
 5 // Select the name of the site's directory that you placed in the www folder
 
-HOW TO SET UP A THE SERVER (on mac)
+HOW TO SET UP THE SERVER (on mac)
 
 1 // Download XAMPP
 
