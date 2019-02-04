@@ -1,4 +1,4 @@
-HOW TO SET UP A TEST SERVER
+HOW TO SET UP A TEST SERVER (on windows)
 
 1 // Download WAMPServer
 
@@ -9,6 +9,20 @@ HOW TO SET UP A TEST SERVER
 4 // Type localhost into the address bar of your web browser
 
 5 // Select the name of the site's directory that you placed in the www folder
+
+HOW TO SET UP A THE SERVER (on mac)
+
+1 // Download XAMPP
+
+2 // Click on 'Manage Servers' and check that you can run the Apache Web Server and the MySQL Database
+
+2b // If you cannot run the MySQL Database, click on it and press reconfigure -> change the port number to 3308
+
+3 // Place the site repository into Applications > XAMPP > htdocs
+
+4 // Type localhost/JIF8312/ into the address bar of your web browser
+
+5 // The HTML file should be loaded and if you set up the database, then everything should be working
 
 
 HOW TO SET UP A DATABASE
