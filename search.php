@@ -31,7 +31,11 @@ if (isset($_POST['search'])) {
 
     // Send actual SQL query to server, store results in a set
     //**prepared statements here to prevent SQL injection, very important for security!**
-    $query = "SELECT `Name`, `Category`, `Thumbnail Image` FROM `updated_hearatale` WHERE " . implode(" OR ", $queryList) . " GROUP BY `Name`"; # Group by name to remove duplicates
+    $query = "SELECT `Name`, `Category`, `Thumbnail Image`
+        FROM `updated_hearatale`
+        WHERE `Category` != 'Spanish' AND `Category` != 'World Languages' #only include English results
+        AND (" . implode(" OR ", $queryList) . ")
+        GROUP BY `Name`"; # Group by name to remove duplicates
     $stmt = $connection->prepare($query);
     call_user_func_array(array($stmt, 'bind_param'), $paramsList);
     $stmt->execute();
@@ -57,8 +61,8 @@ if (isset($_POST['search'])) {
 // callback that filters out words we don't want to search
 function filterWords($word) {
     $blacklist = array(
-                    'The', 'the', 
-                    'At', 'at', 
+                    'The', 'the',
+                    'At', 'at',
                     'And', 'and',
                     'Or', 'or',
                     'In', 'in',
