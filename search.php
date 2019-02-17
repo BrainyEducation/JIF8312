@@ -18,6 +18,7 @@ if (isset($_POST['search'])) {
     // Create a list of all the queries we will run during the lookup - include original search string as first element
     $splitString = explode(' ', $name);
     $splitString = array_filter($splitString, "filterWords"); // remove articles from search
+    array_unshift($splitString, $name);
     $paramsType = str_repeat("s", sizeof($splitString) + 1); // the type for each text item (used for bind_param)
     array_unshift($splitString, $paramsType, $name);
 
@@ -31,7 +32,11 @@ if (isset($_POST['search'])) {
 
     // Send actual SQL query to server, store results in a set
     //**prepared statements here to prevent SQL injection, very important for security!**
-    $query = "SELECT `Name`, `Category`, `Thumbnail Image` FROM `updated_hearatale` WHERE " . implode(" OR ", $queryList) . " GROUP BY `Name`"; # Group by name to remove duplicates
+    $query = "SELECT `Name`, `Category`, `Thumbnail Image`
+        FROM `updated_hearatale`
+        WHERE `Category` != 'Spanish' AND `Category` != 'World Languages' #only include English results
+        AND (" . implode(" OR ", $queryList) . ")
+        GROUP BY `Name`"; # Group by name to remove duplicates
     $stmt = $connection->prepare($query);
     call_user_func_array(array($stmt, 'bind_param'), $paramsList);
     $stmt->execute();
@@ -48,17 +53,33 @@ if (isset($_POST['search'])) {
         $temp_arr = array('thumb' => $Thumbnail, 'name' => $Name, 'category' => $Category);
         array_push($arr, $temp_arr);
     }
-    # Encode our array of arrays to json for jquery
-    echo json_encode($arr);
+    //Reverse the array to show the name first to show by relevance
+    $arr = array_reverse($arr);
+    try {    
+        if($arr != []) {
+            # Encode our array of arrays to json for jquery
+            echo json_encode($arr);
+        } else {
+            throw new Exception('No Results', 123);
+        }
+    } catch (Exception $e) {
+        echo json_encode(array(
+                        'error' => array(
+                                    'msg' => $e->getMessage(),
+                                    'code' => $e->getCode(),
+                        ),
+        ));
+    }
 } else {
     echo  "<p>Please enter a search query</p>";
+    //echo json_encode(['error : true']);
 }
 
 // callback that filters out words we don't want to search
 function filterWords($word) {
     $blacklist = array(
-                    'The', 'the', 
-                    'At', 'at', 
+                    'The', 'the',
+                    'At', 'at',
                     'And', 'and',
                     'Or', 'or',
                     'In', 'in',
