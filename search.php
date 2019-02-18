@@ -18,6 +18,7 @@ if (isset($_POST['search'])) {
     // Create a list of all the queries we will run during the lookup - include original search string as first element
     $splitString = explode(' ', $name);
     $splitString = array_filter($splitString, "filterWords"); // remove articles from search
+    array_unshift($splitString, $name);
     $paramsType = str_repeat("s", sizeof($splitString) + 1); // the type for each text item (used for bind_param)
     array_unshift($splitString, $paramsType, $name);
 
@@ -52,10 +53,26 @@ if (isset($_POST['search'])) {
         $temp_arr = array('thumb' => $Thumbnail, 'name' => $Name, 'category' => $Category);
         array_push($arr, $temp_arr);
     }
-    # Encode our array of arrays to json for jquery
-    echo json_encode($arr);
+    //Reverse the array to show the name first to show by relevance
+    $arr = array_reverse($arr);
+    try {    
+        if($arr != []) {
+            # Encode our array of arrays to json for jquery
+            echo json_encode($arr);
+        } else {
+            throw new Exception('No Results', 123);
+        }
+    } catch (Exception $e) {
+        echo json_encode(array(
+                        'error' => array(
+                                    'msg' => $e->getMessage(),
+                                    'code' => $e->getCode(),
+                        ),
+        ));
+    }
 } else {
     echo  "<p>Please enter a search query</p>";
+    //echo json_encode(['error : true']);
 }
 
 // callback that filters out words we don't want to search
