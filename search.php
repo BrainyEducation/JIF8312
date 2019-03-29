@@ -9,14 +9,27 @@ $database = "test";
 if (isset($_POST['search'])) {
     $name = $_POST['search'];
 
+    $language = 'English';
+    if(isset($_POST['languageFilter'])) {
+        $language = $_POST['languageFilter'];
+    }
+
+    //Error with accented names
+    //COLLATE Latin1_General_CI_AI
+
     // Initialize database connection, catch/print errors
     $connection = mysqli_connect($server,  $username, null, $database);
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
 
-    // search by language
     $languageQuery = " `Category` != 'Spanish' AND `Category` != 'World Languages' "; #only include English results
+    // search by language
+    if($language=='Spanish') {
+        $languageQuery= "Category='Spanish'";
+    } elseif ($language != 'English') {
+        $languageQuery = "Category='World Languages' AND Subcategory='$language'";
+    }
 
     // search by section
     $sectionQuery = '';
@@ -42,7 +55,7 @@ if (isset($_POST['search'])) {
 
     // Send actual SQL query to server, store results in a set
     //**prepared statements here to prevent SQL injection, very important for security!**
-    $query = "SELECT `Name`, `Category`, `Thumbnail Image`
+    $query = "SELECT `Name`, `Category`, `Subcategory`, `Thumbnail Image`
         FROM `updated_hearatale`
         WHERE 
         $languageQuery
