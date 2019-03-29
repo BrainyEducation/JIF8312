@@ -9,18 +9,40 @@ $database = "test";
 if (isset($_POST['search'])) {
     $name = $_POST['search'];
 
+    $language = 'English';
+    if(isset($_POST['languageFilter'])) {
+        $language = $_POST['languageFilter'];
+    }
+
+    //Error with accented names
+    //COLLATE Latin1_General_CI_AI
+
     // Initialize database connection, catch/print errors
     $connection = mysqli_connect($server,  $username, null, $database);
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
 
-    // Create a list of all the queries we will run during the lookup - include original search string as first element
+    $languageQuery = " `Category` != 'Spanish' AND `Category` != 'World Languages' "; #only include English results
+    // search by language
+    if($language=='Spanish') {
+        $languageQuery= "Category='Spanish'";
+    } elseif ($language != 'English') {
+        $languageQuery = "Category='World Languages' AND Subcategory='$language'";
+    }
+
+    // search by section
+    $sectionQuery = '';
+    if (!empty($_POST['section1']) && !empty($_POST['section2'])) { $sectionQuery = $sectionQuery . "AND (`Section`='Children' OR `Section`='Students and Adults') "; }
+        elseif (!empty($_POST['section1'])) { $sectionQuery = $sectionQuery . "AND `Section`='Children' ";}
+        elseif (!empty($_POST['section2'])) {$sectionQuery = $sectionQuery . "AND `Section`='Students and Adults' ";}
+
+    // search by original string + individual words in string 
     $splitString = explode(' ', $name);
     $splitString = array_filter($splitString, "filterWords"); // remove articles from search
     array_unshift($splitString, $name);
-    $paramsType = str_repeat("s", sizeof($splitString) + 1); // the type for each text item (used for bind_param)
-    array_unshift($splitString, $paramsType, $name);
+    $paramsType = str_repeat("s", sizeof($splitString)); // the type for each text item (used for bind_param)
+    array_unshift($splitString, $paramsType);
 
     $queryList = []; // what we will include in the SQL statement
     $paramsList = []; // array we will use to bind the text to the SQL statement
@@ -29,13 +51,16 @@ if (isset($_POST['search'])) {
         $paramsList[$key] = &$item; // hack for calling call_user_func_array() using references
     }
     array_shift($queryList); // removes the 'name like sss... case' from SQL statement
+    $stringQuery = "AND (" . implode(" OR ", $queryList) . ") ";
 
     // Send actual SQL query to server, store results in a set
     //**prepared statements here to prevent SQL injection, very important for security!**
-    $query = "SELECT `Name`, `Category`, `Thumbnail Image`
+    $query = "SELECT `Name`, `Category`, `Subcategory`, `Thumbnail Image`
         FROM `updated_hearatale`
-        WHERE `Category` != 'Spanish' AND `Category` != 'World Languages' #only include English results
-        AND (" . implode(" OR ", $queryList) . ")
+        WHERE 
+        $languageQuery
+        $sectionQuery
+        $stringQuery
         GROUP BY `Name`"; # Group by name to remove duplicates
     $stmt = $connection->prepare($query);
     call_user_func_array(array($stmt, 'bind_param'), $paramsList);
