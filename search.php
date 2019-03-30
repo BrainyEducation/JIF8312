@@ -37,7 +37,7 @@ if (isset($_POST['search'])) {
         elseif (!empty($_POST['section1'])) { $sectionQuery = $sectionQuery . "AND `Section`='Children' ";}
         elseif (!empty($_POST['section2'])) {$sectionQuery = $sectionQuery . "AND `Section`='Students and Adults' ";}
 
-    // search by original string + individual words in string 
+    // search by original string + individual words in string
     $splitString = explode(' ', $name);
     $splitString = array_filter($splitString, "filterWords"); // remove articles from search
     array_unshift($splitString, $name);
@@ -55,9 +55,9 @@ if (isset($_POST['search'])) {
 
     // Send actual SQL query to server, store results in a set
     //**prepared statements here to prevent SQL injection, very important for security!**
-    $query = "SELECT `Name`, `Category`, `Subcategory`, `Thumbnail Image`
+    $query = "SELECT `Name`, `Category`, `Subcategory`, `Thumbnail Image`, `Home Experiences`
         FROM `updated_hearatale`
-        WHERE 
+        WHERE
         $languageQuery
         $sectionQuery
         $stringQuery
@@ -73,14 +73,16 @@ if (isset($_POST['search'])) {
         # Only three fields I care about rn, extract from SQL results
         $Name = $row['Name'];
         $Category = $row['Category'];
+        $Subcategory = $row['Subcategory'];
         $Thumbnail = $row['Thumbnail Image'];
+        $Experiences = $row['Home Experiences'];
 
-        $temp_arr = array('thumb' => $Thumbnail, 'name' => $Name, 'category' => $Category);
+        $temp_arr = array('thumb' => $Thumbnail, 'name' => $Name, 'category' => $Category, 'subcategory' => $Subcategory, 'experiences' => $Experiences);
         array_push($arr, $temp_arr);
     }
     //Reverse the array to show the name first to show by relevance
     $arr = array_reverse($arr);
-    try {    
+    try {
         if($arr != []) {
             # Encode our array of arrays to json for jquery
             echo json_encode($arr);

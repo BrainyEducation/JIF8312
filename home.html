@@ -140,7 +140,7 @@ ga('send', 'pageview');
                                 <div class="wrap">
                                     <div class="searchBar"> <!-- HTML for search bar and button -->
                                         <form id="searchform" method="post">
-                                            <input type="checkbox" name="section1" value="Children" checked> Children  
+                                            <input type="checkbox" name="section1" value="Children" checked> Children
                                             <input type="checkbox" name="section2" value="Students and Adults" checked> Students and Adults<br>
                                             <input type="text" class="search" placeholder="Search for title..." name="search">
                                             <button type='submit' class="submit">Search</button>
@@ -203,9 +203,14 @@ ga('send', 'pageview');
                                                                 var $tempDiv = $('.searchResults').clone();
                                                                 $tempDiv.attr('class', 'searchResults' + i); // Change class name for new div to be unique, may not be necessary
                                                                 $tempDiv.find('.storyTitle').text(obj.name); // Put story title in new div
-                                                                $tempDiv.find('.results_image').attr('src', 'Thumbnails/' + obj.thumb); // Put thumbnail path in new div's img
+                                                                $tempDiv.find('.results_image').attr('src', 'Thumbnails/' + obj.thumb).height(135); // Put thumbnail path in new div's img
+                                                                 // if search result has a home exp (contains a home exp for can-you-do-it's or  its subcat contains "Goose Visit - Rhymes" for think-and-dos) then put a star by it
+                                                                if (obj.experiences != "" || obj.subcategory.includes("Goose Visit - Rhymes")) {
+                                                                    $link = "subcategory.php?cat=Children/" + obj.category + "/" + obj.subcategory; // get link to page with home exp
+                                                                    $tempDiv.append('<span onclick="location=$link" style="margin: 10px; cursor: pointer;" > <img src="images/star-blank.png" height="25px" width="25px"> </span>');
+                                                                }
                                                                 $tempDiv.css({
-                                                                    "float": "left", "width": "60%", "padding": "9px", "font-size": "16px" // CSS for new div just to ensure tiles stack underneath each other
+                                                                    "float": "left", "width": "60%", "padding": "9px", "font-size": "16px", "font-weight": "bold" // CSS for new div just to ensure tiles stack underneath each other
                                                                 });
                                                                 $tempDiv.appendTo('.resultsContainer'); // Add our new div to the end of our results container
                                                             });

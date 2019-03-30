@@ -8,11 +8,6 @@ input[type=text] {
   font-size: px;
 }
 
-input[type=checkbox] {
-	vertical-align: text-top;
-	margin-left: 3px;
-}
-
 .searchbar button {
   padding: 6px;
   background: #ddd;
