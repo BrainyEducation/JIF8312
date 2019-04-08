@@ -35,7 +35,7 @@ if(sizeof($categoryExploded) === 3){
 		<?php
 		if(count($data) != 0) echo "<title>" . $categoryName . " - Hear a Tale</title>";
 		else echo "<title>Not found - Hear a Tale</title>";
-		include ($_SERVER['DOCUMENT_ROOT'] . '/JIF8312/globalHeader.php');
+		include ($_SERVER['DOCUMENT_ROOT'] . '/JIF8312/globalHeader.php');  // TODO: changed from '/globalHeader.php' to work on personal computer
 		?>
 		<script>
 			let player = new Audio()

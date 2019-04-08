@@ -167,11 +167,11 @@ ga('send', 'pageview');
                                     <!-- Empty container for us to duplicate/populate asynchronously through jquery -->
                                     <div class="resultsContainer">
                                         <div class="searchResults">
-                                            <a class="thumb" href="ADULT_author.php?author=BRADSTREET, Anne"> <!-- Link for img, need to update this to redirect to correct page -->
+                                            <a class="thumb"> <!-- Link for img, need to update this to redirect to correct page -->
                                                 <img class="results_image" src=""> <!-- Empty until initialized through ajax -->
                                             </a>
                                             <div class="storyInfo">
-                                                <a class="storyTitle" href="ADULT_author.php?author=BRADSTREET, Anne"></a> <!-- Link for title, need to update this to redirect to correct page -->
+                                                <a class="storyTitle"></a> <!-- Link for title, need to update this to redirect to correct page -->
                                                 <span class="storyExperience"></span>
                                                 <div class="storyAuthor"></div>
                                                 <div class="storyCategory"></div>
@@ -199,15 +199,26 @@ ga('send', 'pageview');
                                                         if(!data.error) {
                                                             $(data).each(function(i, obj) { // Iterate through JSON results
                                                                 var $tempDiv = $('.searchResults').clone();
-                                                                $tempDiv.attr('class', 'searchResults' + i); // Change class name for new div to be unique, may not be necessary
+                                                                // Change class name for new div to be unique, may not be necessary
+                                                                $tempDiv.attr('class', 'searchResults' + i);
+                                                                // change link to go to story page
+                                                                if (obj.section == "Children") {
+                                                                    $link = "video.php?url=" + obj.file + "&cat=" + obj.section + "/" + obj.category + "/" + obj.subcategory + "&youtubeurl=" + obj.url;
+                                                                } else if (obj.section == "Students and Adults") {
+                                                                    $link = "ADULT_viewer.php?url=" + obj.file;
+                                                                } else if (obj.section == "Southern Literature") {
+                                                                    $link = ""; // TODO: fix links for southern lit section (but southern lit section doesnt work on actaul site)
+                                                                }
+                                                                $tempDiv.find('.thumb').attr("href", $link);
+                                                                $tempDiv.find('.storyTitle').attr("href", $link);
                                                                 //Put thumbnail path in new div's img
                                                                 $tempDiv.find('.results_image').attr('src', 'Thumbnails/' + obj.thumb).height(135);
                                                                 // Put story title in new div
                                                                 $tempDiv.find('.storyTitle').text(obj.name);
                                                                  // if search result has a home exp (contains a home exp for can-you-do-it's or  its subcat contains "Goose Visit - Rhymes" for think-and-dos) then put a star by it
                                                                 if (obj.experiences != "" || obj.subcategory.includes("Goose Visit - Rhymes")) {
-                                                                    $link = "subcategory.php?cat=Children/" + obj.category + "/" + obj.subcategory; // get link to page with home exp
-                                                                    $tempDiv.find('.storyExperience').attr('onclick', 'location=$link').append('<img src="images/star-blank.png" height="25px" width="25px">');
+                                                                    $expLink = "subcategory.php?cat=Children/" + obj.category + "/" + obj.subcategory; // get link to page with home exp
+                                                                    $tempDiv.find('.storyExperience').attr('onclick', 'location=$expLink').append('<img src="images/star-blank.png" height="25px" width="25px">');
                                                                 }
                                                                 // Put story author in new div
                                                                 $tempDiv.find('.storyAuthor').text(obj.author != "" ? obj.author.toLowerCase() : "Anonymous");
@@ -222,7 +233,7 @@ ga('send', 'pageview');
                                                                 $tempDiv.appendTo('.resultsContainer'); // Add our new div to the end of our results container
                                                             });
                                                         } else {
-                                                            $('.resultsContainer').append("<br>We're sorry, we could not find any results for your search.<br><br>Suggestions:<br><li>Make sure words are spelled correctly</li><li>Try different search terms</li><li>Try more general search terms</li>");
+                                                            $('.resultsContainer').append("<br><br>We're sorry, we could not find any results for your search.<br><br>Suggestions:<br><li>Make sure words are spelled correctly</li><li>Try different search terms</li><li>Try more general search terms</li>");
                                                             throw data.error.msg;
                                                         }
 

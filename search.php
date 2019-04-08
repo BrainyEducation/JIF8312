@@ -55,7 +55,7 @@ if (isset($_POST['search'])) {
 
     // Send actual SQL query to server, store results in a set
     //**prepared statements here to prevent SQL injection, very important for security!**
-    $query = "SELECT `Name`, `Author`, `Category`, `Subcategory`, SUBSTRING(`Story Description`, 1, 36) AS Description, `Thumbnail Image`, `Home Experiences`
+    $query = "SELECT `Name`, `Author`, `Section`, `Category`, `Subcategory`, SUBSTRING(`Story Description`, 1, 36) AS Description, `Thumbnail Image`, `Home Experiences`, `File Location`, `URL`
         FROM `updated_hearatale`
         WHERE
         $languageQuery
@@ -73,13 +73,16 @@ if (isset($_POST['search'])) {
         # Only three fields I care about rn, extract from SQL results
         $Name = $row['Name'];
         $Author = $row['Author'];
+        $Section = $row['Section'];
         $Category = $row['Category'];
         $Subcategory = $row['Subcategory'];
         $Description = $row['Description'];
         $Thumbnail = $row['Thumbnail Image'];
         $Experiences = $row['Home Experiences'];
+        $URL = $row['URL'];
+        $File = $row['File Location'];
 
-        $temp_arr = array('thumb' => $Thumbnail, 'description' => $Description, 'name' => $Name, 'author' => $Author, 'category' => $Category, 'subcategory' => $Subcategory, 'experiences' => $Experiences);
+        $temp_arr = array('thumb' => $Thumbnail, 'description' => $Description, 'name' => $Name, 'author' => $Author, 'section' => $Section, 'category' => $Category, 'subcategory' => $Subcategory, 'experiences' => $Experiences, 'url' => $URL, 'file' => $File);
         array_push($arr, $temp_arr);
     }
     //Reverse the array to show the name first to show by relevance
