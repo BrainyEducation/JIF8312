@@ -172,6 +172,7 @@ ga('send', 'pageview');
                                             </a>
                                             <div class="storyInfo">
                                                 <a class="storyTitle" href="ADULT_author.php?author=BRADSTREET, Anne"></a> <!-- Link for title, need to update this to redirect to correct page -->
+                                                <span class="storyExperience"></span>
                                                 <div class="storyAuthor"></div>
                                                 <div class="storyCategory"></div>
                                                 <p class="storyDescription"></p>
@@ -203,17 +204,17 @@ ga('send', 'pageview');
                                                                 $tempDiv.find('.results_image').attr('src', 'Thumbnails/' + obj.thumb).height(135);
                                                                 // Put story title in new div
                                                                 $tempDiv.find('.storyTitle').text(obj.name);
+                                                                 // if search result has a home exp (contains a home exp for can-you-do-it's or  its subcat contains "Goose Visit - Rhymes" for think-and-dos) then put a star by it
+                                                                if (obj.experiences != "" || obj.subcategory.includes("Goose Visit - Rhymes")) {
+                                                                    $link = "subcategory.php?cat=Children/" + obj.category + "/" + obj.subcategory; // get link to page with home exp
+                                                                    $tempDiv.find('.storyExperience').attr('onclick', 'location=$link').append('<img src="images/star-blank.png" height="25px" width="25px">');
+                                                                }
                                                                 // Put story author in new div
                                                                 $tempDiv.find('.storyAuthor').text(obj.author != "" ? obj.author.toLowerCase() : "Anonymous");
                                                                 // Put story category in new div
                                                                 $tempDiv.find('.storyCategory').text(obj.category + " // " + obj.subcategory);
                                                                 // Put story description in new div
                                                                 $tempDiv.find('.storyDescription').text(obj.description != "" ? "\"" + obj.description + "...\"" : "");
-                                                                 // if search result has a home exp (contains a home exp for can-you-do-it's or  its subcat contains "Goose Visit - Rhymes" for think-and-dos) then put a star by it
-                                                                if (obj.experiences != "" || obj.subcategory.includes("Goose Visit - Rhymes")) {
-                                                                    $link = "subcategory.php?cat=Children/" + obj.category + "/" + obj.subcategory; // get link to page with home exp
-                                                                    $tempDiv.find('.storyTitle').append('<span onclick="location=$link" style="margin: 10px; cursor: pointer;" > <img src="images/star-blank.png" height="25px" width="25px"> </span>');
-                                                                }
                                                                 $tempDiv.css({
                                                                     // "position": "relative",  "left": "100px",
                                                                     "float": "left", "width": "90%", "padding": "9px"// CSS for new div just to ensure tiles stack underneath each other
