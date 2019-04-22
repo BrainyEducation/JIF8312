@@ -6,6 +6,11 @@
 ## Known Bugs
 Some keywords do not return any search results and do not redirect to the default ‘no results’ page. This includes queries with special accents in the search.
 
+# Files of Interest for Merging with Live Site
+1. css/main.css
+2. search.php
+3. home.html
+
 # Install Guide
 ## Prerequisites & Required Software
 1. XAMPP (available here: https://www.apachefriends.org/index.html)
